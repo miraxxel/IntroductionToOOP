@@ -70,6 +70,22 @@ public:
 		return *this;
 	}
 
+	Point& operator++() // Prefix increment
+	{
+		x++;
+		y++;
+		return *this; // разыменованный указатель на объект
+	}
+	Point operator++(int) // Postfix increment
+	{
+		// т.к. постфиксный инкремент выполняется самым последним, 
+		// то мы сохраняем старое значение объекта
+		Point old = *this;
+		x++;
+		y++;
+		return old; // возвращаем старый объект
+	}
+
 	//			Methods:
 	double distance(const Point& other) const
 	{
@@ -90,14 +106,52 @@ double distance(const Point& A, const Point& B)
 	return sqrt(x_distance * x_distance + y_distance * y_distance);
 }
 
+Point operator+(const Point& left, const Point& right)
+{
+	Point result;
+	result.set_x(left.get_x() + right.get_x());
+	result.set_y(left.get_y() + right.get_y());
+	return result;
+}
+
+Point operator-(const Point& left, const Point& right)
+{
+	Point result
+	(
+		left.get_x() - right.get_x(),
+		left.get_y() - right.get_y()
+	);
+	return result;
+}
+
+Point operator*(const Point& left, const Point& right)
+{
+	return Point
+	(
+		left.get_x() * right.get_x(),
+		left.get_y() * right.get_y()
+	);
+}
+
+bool operator==(const Point& left, const Point& right)
+{
+	/*if (left.get_x() == right.get_x() && left.get_y() == right.get_y())
+		return true;
+	else 
+		return false;*/
+	return left.get_x() == right.get_x() && left.get_y() == right.get_y();
+}
+
 //#define STRUCT_POINT
 //#define DISTANCE_CHECK
 //#define CONSTRUCTORS_CHECK
-#define ASSIGNMMENT_CHECK
+//#define ASSIGNMMENT_CHECK
+//#define ARITHMETICAL_OPERATORS_CHECK
 
 void main()
 {
 	setlocale(LC_ALL, "");
+
 #ifdef STRUCT_POINT
 	cout << "Hello OOP" << endl;
 
@@ -113,7 +167,6 @@ void main()
 	Point* pA = &A;
 	cout << pA->x << "\t" << pA->y << endl;
 #endif // STRUCT_POINT
-
 #ifdef DISTANCE_CHECK
 	Point A;
 	A.set_x(2);
@@ -136,7 +189,6 @@ void main()
 	cout << "Расстояние от точки 'B' до точки 'A' = " << distance(B, A) << endl;
 	cout << delimiter << endl;
 #endif // DISTANCE_CHECK
-
 #ifdef CONSTRUCTORS_CHECK
 	Point A;	// Default constructor
 	A.print();
@@ -168,4 +220,19 @@ void main()
 	B.print();
 	C.print(); 
 #endif // ASSIGNMMENT_CHECK
+#ifdef ARITHMETICAL_OPERATORS_CHECK
+	Point A(2, 3);
+	Point B(7, 8);
+	A.print();
+	B.print();
+
+	Point C = A * B;
+	C.print();
+
+	C++;
+	C.print();
+#endif // ARITHMETICAL_OPERATORS_CHECK
+
+	//cout << (2 == 3) << endl;
+	cout << (Point(2, 3) == Point(3, 3)) << endl;
 }
