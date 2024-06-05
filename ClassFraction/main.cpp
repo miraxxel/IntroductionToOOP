@@ -1,4 +1,5 @@
-﻿#include<iostream>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
 using namespace std;
 
 #define delimiter "\n-----------------------------------------\n"
@@ -229,6 +230,12 @@ bool operator<=(const Fraction& left, const Fraction& right)
 	return !(left > right);
 	//return left < right || left == right;
 }
+
+// std - standart namespace 
+// namespace - пространство имён - как папка, а имя, расположенное в нём - как файл
+// :: - scope operator - оператор разрешения видимости, позволяет зайти в пространство имён
+// сам по себе '::' выводит нас в GlobalScope (Глобальное пространство имён - находится за пределами любых фигурных скобок) 
+// ostream - output stream - поток вывода
 std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 {
 	if (obj.get_integer())os << obj.get_integer();
@@ -241,20 +248,48 @@ std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 	else if (obj.get_integer() == 0)os << 0;
 	return os;
 }
-std::istream& operator>>(std::istream& in, Fraction& obj)
-{
-	int integer, numerator, denominator;
 
-	in >> integer >> numerator >> denominator;
-	if (in)
+// istream - input stream - поток ввода
+std::istream& operator>>(std::istream& is, Fraction& obj)
+{
+	/*int integer, numerator, denominator;
+
+	is >> integer >> numerator >> denominator;
+	if (is)
 	{
 		obj.set_integer(integer);
 		obj.set_numerator(numerator);
 		obj.set_denominator(denominator);
 	}
 	else
-		cout << "На ввод ожидается 3 целых числа (1 - целая часть, 2 - числитель, 3 - знаменатель)!!!\nЗначения по умолчанию: ";
-	return in;
+		cout << "На ввод ожидается 3 целых числа (1 - целая часть, 2 - числитель, 3 - знаменатель)!!!\nЗначения по умолчанию: ";*/
+
+	const int SIZE = 64;
+	char buffer[SIZE]{};
+	//is >> buffer;
+	is.getline(buffer, SIZE);
+	int number[3];
+	int n = 0;
+	const char delimeters[] = "(/) +";
+
+	for (char* pch = strtok(buffer, delimeters); pch; pch = strtok(NULL, delimeters))
+		// функция strtok() разделает строку на токены
+		// !!! функция strtok() изменяет входную строку !!!
+		number[n++] = atoi(pch); 
+		// функция atoi() - "ASCII string to int" принимает строку и возвращает значение типа 'int' найденное в этой строке
+		// pch - pointer to character - указатель на символ
+	
+	/*for (int i = 0; i < n; i++)
+		cout << number[i] << "\t"; cout << endl;*/
+
+	switch (n)
+	{
+	case 1: obj = Fraction(number[0]); break;
+	case 2: obj = Fraction(number[0], number[1]); break;
+	case 3: obj = Fraction(number[0], number[1], number[2]); break;
+	}
+
+	return is;
 }
 
 //#define CONSTRUCTORS_CHECK
@@ -344,7 +379,7 @@ void main()
 #ifdef STREAMS_CHECK
 
 	Fraction A(2, 3, 4);
-	cout << "Введите простую дробь (1 - целая часть, 2 - числитель, 3 - знаменатель):\n"; cin >> A;
+	cout << "Введите простую дробь: "; cin >> A;
 	cout << A << endl;
 
 #endif // STREAMS_CHECK
