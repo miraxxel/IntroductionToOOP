@@ -1,4 +1,5 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+﻿#define _USE_MATH_DEFINES
+#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 using namespace std;
 
@@ -43,6 +44,16 @@ public:
 		this->numerator = 0;
 		this->denominator = 1;
 		cout << "1ArgConstructor: \t" << this << endl;
+	}
+	Fraction(double decimal)
+	{
+		decimal += 1e-10;
+		integer = decimal; // from more to less
+		decimal -= integer;
+		denominator = 1e+9;
+		numerator = decimal * denominator;
+		reduce();
+		cout << "Constructor:\t" << this << endl;
 	}
 	Fraction(int numerator, int denominator)
 	{
@@ -119,6 +130,15 @@ public:
 		return integer;
 	}
 
+	explicit operator double()
+	{
+		/*double dec_fr;
+		if (integer > 0) dec_fr = integer + (numerator / denominator);
+		else dec_fr = numerator / denominator;
+		return dec_fr;*/
+		return integer + (double)numerator / denominator;
+	}
+
 	//			Methods:
 	Fraction& reduce()
 	{
@@ -132,7 +152,7 @@ public:
 		{
 			rest = more % less;
 			more = less;
-			less = more;
+			less = rest;
 		} while (rest);
 
 		int GCD = more; // GCD - Greatest Common Divesor
@@ -305,7 +325,7 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 //#define TYPE_CONVERSIONS_BASICS
 //#define CONVERSIONS_FROM_OTHER_TO_CLASS
 #define CONVERSIONS_FROM_CLASS_TO_OTHER
-#define CONVERSIONS_TASK_1
+//#define CONVERSIONS_TASK_1
 #define CONVERSIONS_TASK_2
 
 void main()
@@ -426,13 +446,13 @@ void main()
 	cout << A << endl;
 	
 	//int a = (int)A;
-	double a = A;
+	double a = (double)A;
 
 	cout << a << endl;
 #endif // CONVERSIONS_TASK_1 
 
 #ifdef CONVERSIONS_TASK_2
-	Fraction B = 2.75;
+	Fraction B = M_PI;
 	cout << B << endl;
 #endif // CONVERSIONS_TASK_2
 
