@@ -2,7 +2,8 @@
 #include<iostream>
 using namespace std;
 
-#define delimiter "\n-----------------------------------------\n"
+#define delimiter		"\n-----------------------------------------\n"
+#define double_delimiter "\n========================================\n"
 
 class Fraction;
 Fraction operator*(Fraction left, Fraction right);
@@ -36,7 +37,7 @@ public:
 		denominator = 1;
 		cout << "DefaultConstructor:\t" << endl;
 	}
-	Fraction(int integer)
+	explicit Fraction(int integer)
 	{
 		this->integer = integer;
 		this->numerator = 0;
@@ -112,6 +113,11 @@ public:
 		return old; // возвращаем старый объект*/
 	}
 
+	//			Type-cast operators:
+	explicit operator int()
+	{
+		return integer;
+	}
 
 	//			Methods:
 	Fraction& reduce()
@@ -295,7 +301,12 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 //#define CONSTRUCTORS_CHECK
 //#define ARITHMETICAL_OPERATORS_CHECK
 //#define COMPARISON_OPERATORS_CHECK
-#define STREAMS_CHECK
+//#define STREAMS_CHECK
+//#define TYPE_CONVERSIONS_BASICS
+//#define CONVERSIONS_FROM_OTHER_TO_CLASS
+#define CONVERSIONS_FROM_CLASS_TO_OTHER
+#define CONVERSIONS_TASK_1
+#define CONVERSIONS_TASK_2
 
 void main()
 {
@@ -376,6 +387,7 @@ void main()
 
 	cout << (Fraction(1, 2) >= Fraction(5, 10)) << endl;
 #endif COMPARISON_OPERATORS_CHECK
+
 #ifdef STREAMS_CHECK
 
 	Fraction A(2, 3, 4);
@@ -383,4 +395,46 @@ void main()
 	cout << A << endl;
 
 #endif // STREAMS_CHECK
+
+#ifdef TYPE_CONVERSIONS_BASICS 
+	int a = 2;		// no conversions
+	double b = 3;	// conversion from less to more
+	int c = b;		// conversion from more to less without data loss
+	int d = 2.5;	// conversion from more to less with data loss
+#endif // TYPE_CONVERSIONS_BASICS
+
+#ifdef CONVERSIONS_FROM_OTHER_TO_CLASS
+	Fraction A = (Fraction)5;	// convertion from 'int' to 'Fraction'
+						// с помощью single-arg constructor
+	cout << A << endl;  
+
+	cout << double_delimiter << endl;
+
+	Fraction B;	// DefaultConstructor
+	cout << delimiter << endl;
+	B = Fraction(8);	// явно вызываем конструктор
+						// convertion from 'int' to 'Fraction'
+						// с помощью single-arg constructor и CopyAssignment
+	cout << delimiter << endl;
+	cout << B << endl;
+
+	cout << double_delimiter << endl;
+#endif // CONVERSIONS_FROM_OTHER_TO_CLASS
+
+#ifdef CONVERSIONS_TASK_1 
+	Fraction A(2, 3, 4);
+	cout << A << endl;
+	
+	//int a = (int)A;
+	double a = A;
+
+	cout << a << endl;
+#endif // CONVERSIONS_TASK_1 
+
+#ifdef CONVERSIONS_TASK_2
+	Fraction B = 2.75;
+	cout << B << endl;
+#endif // CONVERSIONS_TASK_2
+
+	
 }
