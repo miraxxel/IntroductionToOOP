@@ -12,6 +12,10 @@ public:
 	{
 		return str;
 	}
+	int get_size()const
+	{
+		return size;
+	}
 	//			Constructors:
 	// конструктор по умолчанию, который создает пустую строку размером 80 байт
 	String(int size = 80)
@@ -41,6 +45,13 @@ public:
 	}
 };
 
+String operator+(const String& str1, const String& str2) 
+{
+	int newSize = str1.get_size() + str2.get_size(); 
+	char* newStr = new char[newSize + 1];
+	// пока не готово
+}
+
 std::ostream& operator<<(std::ostream& os, const String& obj)
 {
 	return os << obj.get_str();
@@ -59,6 +70,6 @@ void main()
 	cout << str1 << endl;
 	cout << str2 << endl;
 	
-	/*String str3 = str1 + str2;
-	cout << str3 << endl;*/
+	String str3 = str1 + str2;
+	cout << str3 << endl;
 }
