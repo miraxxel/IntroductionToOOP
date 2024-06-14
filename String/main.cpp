@@ -8,15 +8,24 @@ class String
 	int size;	// Размер строки в байтах
 	char* str;	// Адрес строки в динамической памяти
 public:
+	const char* get_str()const
+	{
+		return str;
+	}
 	//			Constructors:
-	// не реализуем инкапсюляцию, сразу переходим к конструкторам
-	
 	// конструктор по умолчанию, который создает пустую строку размером 80 байт
 	String(int size = 80)
 	{
 		this->size = size;
 		this->str = new char[size] {};
 		cout << "DefaultConstructor:\t" << this << endl;
+	}
+	String(const char str[])
+	{
+		this->size = strlen(str) + 1;
+		this->str = new char[size] {};
+		for (int i = 0; str[i]; i++)this->str[i] = str[i];
+		cout << "Constructor:\t\t" << this << endl;
 	}
 	~String()
 	{
@@ -32,6 +41,11 @@ public:
 	}
 };
 
+std::ostream& operator<<(std::ostream& os, const String& obj)
+{
+	return os << obj.get_str();
+}
+
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -45,6 +59,6 @@ void main()
 	cout << str1 << endl;
 	cout << str2 << endl;
 	
-	String str3 = str1 + str2;
-	cout << str3 << endl;
+	/*String str3 = str1 + str2;
+	cout << str3 << endl;*/
 }
