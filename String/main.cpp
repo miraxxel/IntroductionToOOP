@@ -23,25 +23,26 @@ public:
 	}
 	//			Constructors:
 	// конструктор по умолчанию, который создает пустую строку размером 80 байт
-	explicit String(int size = 80)
+							// :size(size) - перед () - переменная член класса, в () принимаемый параметр
+	explicit String(int size = 80):size(size), str(new char[size] {})
 	{
-		this->size = size;
-		this->str = new char[size] {};
+		//this->size = size;
+		//this->str = new char[size] {};
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
-	String(const char str[])
+	String(const char str[]) :size(strlen(str) + 1), str(new char[size] {})
 	{
-		this->size = strlen(str) + 1;
-		this->str = new char[size] {};
+		//this->size = strlen(str) + 1;
+		//this->str = new char[size] {};
 		for (int i = 0; str[i]; i++)this->str[i] = str[i];
 		cout << "Constructor:\t\t" << this << endl;
 	}
 
-	String(const String& other)
+	String(const String& other) :size(other.size), str(new char[size] {})
 	{
 		// Deep Copy
-		this->size = other.size;
-		this->str = new char[size] {};
+		//this->size = other.size;
+		//this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyConstructor:\t" << this << endl;
 	}
@@ -96,10 +97,36 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 	return os << obj.get_str();
 }
 
+//#define CAT_CHECK		// CAT - от 'конкатенация'
+#define CONSTRUCTORS_CHECK
+
 void main()
 {
 	setlocale(LC_ALL, "");
 
+#ifdef CONSTRUCTORS_CHECK
+	String str1;	// Default Constructor
+	str1.print();
+
+	String str2(8);
+	str2.print();	// 1Arg Constructor
+
+	String str3 = "Hello"; // 1Arg Constructor
+	str3.print();
+
+	String str4();	// Здесь НЕ вызывается конструктор и НЕ создается объект, 
+					// в этом выражении объявляется функция str4(), которая ничего не принимает, и возвращает объект класса 'String'.
+	//str4.print();
+	// Для явного вызова конструктора по умолчанию использовать {}, но не (
+	String str5{};	// Явный вызов конструктора по умолчанию
+	str5.print();
+
+	String str6{ str3 }; // Copy Constructor, передаем то, что хотим скопировать, обычно передается в (), но в конструкторах в {}
+	str6.print();
+
+#endif // CONSTRUCTORS_CHECK
+
+#ifdef CAT_CHECK 
 	/*String str;
 	str.print();*/
 
@@ -115,4 +142,6 @@ void main()
 	cout << str1 << endl;
 	cout << str2 << endl;
 	cout << str3 << endl;	// HelloWorld
+#endif // CAT_CHECK
+
 }
