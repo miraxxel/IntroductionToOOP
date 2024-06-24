@@ -8,74 +8,92 @@ class String
 	int size;	// Размер строки в байтах
 	char* str;	// Адрес строки в динамической памяти
 public:
-	const char* get_str()const
-	{
-		return str;
-	}
-	int get_size()const
-	{
-		return size;
-	}
+	const char* get_str()const;
+	int get_size()const;
 	// для неконстантного объекта
-	char* get_str()
-	{
-		return str;
-	}
+	char* get_str();
+
 	//			Constructors:
 	// конструктор по умолчанию, который создает пустую строку размером 80 байт
 							// :size(size) - перед () - переменная член класса, в () принимаемый параметр
-	explicit String(int size = 80):size(size), str(new char[size] {})
-	{
-		//this->size = size;
-		//this->str = new char[size] {};
-		cout << "DefaultConstructor:\t" << this << endl;
-	}
-	String(const char str[]) :String(strlen(str)+1)
-	{
-		//this->size = strlen(str) + 1;
-		//this->str = new char[size] {};
-		for (int i = 0; str[i]; i++)this->str[i] = str[i];
-		cout << "Constructor:\t\t" << this << endl;
-	}
-
-	String(const String& other) :String(other.str)
-	{
-		// Deep Copy
-		//this->size = other.size;
-		//this->str = new char[size] {};
-		//for (int i = 0; i < size; i++)this->str[i] = other.str[i];
-		cout << "CopyConstructor:\t" << this << endl;
-	}
-
-	~String()
-	{
-		delete[] this->str;
-		cout << "Destructor:\t\t" << this << endl;
-	}
+	explicit String(int size = 80);
+	String(const char str[]);
+	String(const String& other);
+	~String();
 
 	//			Operators:
-	String& operator=(const String& other)
-	{
-		if (this == &other)return *this;
-
-		delete[] str;
-		this->size = other.size;
-		this->str = new char[size] {};
-
-		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
-		cout << "CopyAssignment:\t\t" << this << endl;
-
-		return *this;
-	}
+	String& operator=(const String& other);
 	//			Methods:
-	void print()const
-	{
-		cout << "Obj:\t" << this<<"\t";
-		cout << "Size:\t" << size << "\t";
-		cout << "Addr:\t" << &str << "\t";
-		cout << "Str:\t" << str << endl;
-	}
+	void print()const;
 };
+// String:: показывает, где должен находится (для чего написан) метод/конструктор/деструктор (в данном случае, мы показываем, что в классе String)
+const char* String::get_str()const
+{
+	return str;
+}
+int String::get_size()const
+{
+	return size;
+}
+// для неконстантного объекта
+char* String::get_str()
+{
+	return str;
+}
+//			Constructors:
+// конструктор по умолчанию, который создает пустую строку размером 80 байт (параметр по умолчанию пишется только в прототипе)
+						// :size(size) - перед () - переменная член класса, в () принимаемый параметр
+String::String(int size) :size(size), str(new char[size] {})
+{
+	//this->size = size;
+	//this->str = new char[size] {};
+	cout << "DefaultConstructor:\t" << this << endl;
+}
+String::String(const char str[]) :String(strlen(str) + 1)
+{
+	//this->size = strlen(str) + 1;
+	//this->str = new char[size] {};
+	for (int i = 0; str[i]; i++)this->str[i] = str[i];
+	cout << "Constructor:\t\t" << this << endl;
+}
+
+String::String(const String& other) :String(other.str)
+{
+	// Deep Copy
+	//this->size = other.size;
+	//this->str = new char[size] {};
+	//for (int i = 0; i < size; i++)this->str[i] = other.str[i];
+	cout << "CopyConstructor:\t" << this << endl;
+}
+
+String::~String()
+{
+	delete[] this->str;
+	cout << "Destructor:\t\t" << this << endl;
+}
+
+//			Operators:
+String& String::operator=(const String& other)
+{
+	if (this == &other)return *this;
+
+	delete[] str;
+	this->size = other.size;
+	this->str = new char[size] {};
+
+	for (int i = 0; i < size; i++)this->str[i] = other.str[i];
+	cout << "CopyAssignment:\t\t" << this << endl;
+
+	return *this;
+}
+//			Methods:
+void String::print()const
+{
+	cout << "Obj:\t" << this << "\t";
+	cout << "Size:\t" << size << "\t";
+	cout << "Addr:\t" << &str << "\t";
+	cout << "Str:\t" << str << endl;
+}
 
 String operator+(const String& left, const String& right) 
 {
