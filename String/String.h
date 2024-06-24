@@ -1,18 +1,18 @@
-#pragma once
+п»ї#pragma once
 #include<iostream>
 using namespace std;
 
 ////////////////////////////////////////////////////////////////////////
-/////////		Объявление класса (Class Declaration)		///////////
+/////////		РћР±СЉСЏРІР»РµРЅРёРµ РєР»Р°СЃСЃР° (Class Declaration)		///////////
 
 class String
 {
-	int size;	// Размер строки в байтах
-	char* str;	// Адрес строки в динамической памяти
+	int size;	// Р Р°Р·РјРµСЂ СЃС‚СЂРѕРєРё РІ Р±Р°Р№С‚Р°С…
+	char* str;	// РђРґСЂРµСЃ СЃС‚СЂРѕРєРё РІ РґРёРЅР°РјРёС‡РµСЃРєРѕР№ РїР°РјСЏС‚Рё
 public:
 	const char* get_str()const;
 	int get_size()const;
-	char* get_str();	// для неконстантного объекта
+	char* get_str();	// РґР»СЏ РЅРµРєРѕРЅСЃС‚Р°РЅС‚РЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 
 	//			Constructors:
 	explicit String(int size = 80);
@@ -29,5 +29,5 @@ public:
 String operator+(const String& left, const String& right);
 std::ostream& operator<<(std::ostream& os, const String& obj);
 
-/////////	Конец объявления класса (Class Declaration end)		///////////
+/////////	РљРѕРЅРµС† РѕР±СЉСЏРІР»РµРЅРёСЏ РєР»Р°СЃСЃР° (Class Declaration end)		///////////
 //////////////////////////////////////////////////////////////////////////

@@ -1,7 +1,7 @@
-#include "String.h"
+п»ї#include "String.h"
 
 ////////////////////////////////////////////////////////////////////////
-/////////		Определение класса (Class Defenition)		///////////
+/////////		РћРїСЂРµРґРµР»РµРЅРёРµ РєР»Р°СЃСЃР° (Class Defenition)		///////////
 
 const char* String::get_str()const
 {
@@ -11,7 +11,7 @@ int String::get_size()const
 {
 	return size;
 }
-// для неконстантного объекта
+// РґР»СЏ РЅРµРєРѕРЅСЃС‚Р°РЅС‚РЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 char* String::get_str()
 {
 	return str;
@@ -64,7 +64,7 @@ void String::print()const
 
 String operator+(const String& left, const String& right)
 {
-	// -1 т.к. в конце каждой строке есть конкатенирующий ноль, здесь у нас их 2
+	// -1 С‚.Рє. РІ РєРѕРЅС†Рµ РєР°Р¶РґРѕР№ СЃС‚СЂРѕРєРµ РµСЃС‚СЊ РєРѕРЅРєР°С‚РµРЅРёСЂСѓСЋС‰РёР№ РЅРѕР»СЊ, Р·РґРµСЃСЊ Сѓ РЅР°СЃ РёС… 2
 	String buffer(left.get_size() + right.get_size() - 1);	// from 'int' to 'string'
 	for (int i = 0; i < left.get_size(); i++)
 		buffer.get_str()[i] = left.get_str()[i];
@@ -79,5 +79,5 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 	return os << obj.get_str();
 }
 
-/////////	Конец определения класса (Class Definition end)	///////////////
+/////////	РљРѕРЅРµС† РѕРїСЂРµРґРµР»РµРЅРёСЏ РєР»Р°СЃСЃР° (Class Definition end)	///////////////
 //////////////////////////////////////////////////////////////////////////
