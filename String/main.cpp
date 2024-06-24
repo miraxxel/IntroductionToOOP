@@ -10,12 +10,10 @@ class String
 public:
 	const char* get_str()const;
 	int get_size()const;
-	// для неконстантного объекта
-	char* get_str();
+	char* get_str();	// для неконстантного объекта
 
 	//			Constructors:
 	// конструктор по умолчанию, который создает пустую строку размером 80 байт
-							// :size(size) - перед () - переменная член класса, в () принимаемый параметр
 	explicit String(int size = 80);
 	String(const char str[]);
 	String(const String& other);
